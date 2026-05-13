@@ -1,4 +1,3 @@
-# AfriCode Hub 
-Plateforme collaborative d'apprentissage du code pour les jeunes développeurs 
-africains. 
-## Fonctionnalités - Cours en ligne - Exercices pratiques - Forum d'entr
+
+- Forum d'entraide avec système de questions/réponses - Messagerie instantanée entre apprenants. 
+
