@@ -1,0 +1,13 @@
+#!/bin/bash
+COMMIT_MSG=$(cat "$1")
+PATTERN="^(feat|fix|docs|chore|refactor|test|style)(\([a-zA-Z0-9_-]+\))?: .{1,72}$"
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+  echo ""
+  echo "[ERREUR] Message non conforme a Conventional Commits."
+  echo "Format attendu : type(scope): description"
+  echo "Types autorises : feat, fix, docs, chore, refactor, test, style"
+  echo "Message recu : $COMMIT_MSG"
+  exit 1
+fi
+echo "[OK] Message de commit conforme."
+exit 0

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "[pre-commit] Vérification de la qualité du code..."
+
+# Vérification 1 : aucun fichier .log dans le staging
+STAGED_LOGS=$(git diff --cached --name-only | grep '\.log$')
+if [ -n "$STAGED_LOGS" ]; then
+  echo "[ERREUR] Fichiers .log détectés dans le staging :"
+  echo "$STAGED_LOGS"
+  echo "Retirez ces fichiers avant de commiter."
+  exit 1
+fi
+
+# Vérification 2 : pas de console.log dans les fichiers .js
+STAGED_JS=$(git diff --cached --name-only | grep '\.js$')
+if [ -n "$STAGED_JS" ]; then
+  for FILE in $STAGED_JS; do
+    if git diff --cached "$FILE" | grep '^+' | grep -v '^+++' | grep -q 'console\.log'; then
+      echo "[ERREUR] console.log détecté dans : $FILE"
+      echo "Supprimez les logs de débogage avant de commiter."
+      exit 1
+    fi
+  done
+fi
+
+echo "[OK] Vérifications réussies. Commit autorisé."
+exit 0
